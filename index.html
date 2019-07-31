@@ -1,60 +1,76 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Javascript Calculator</title>
+    <meta charset="UTF-8" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Space+Mono:400,700|Work+Sans:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="styles.css" rel="stylesheet" />
+  </head>
 
-<head>
-	<title>Javascript Calculator</title>
-	<meta charset="UTF-8" />
-	<link href="https://fonts.googleapis.com/css?family=Space+Mono:400,700|Work+Sans:400,700&display=swap" rel="stylesheet" />
-	<link href="styles.css" rel="stylesheet" />
-</head>
+  <body>
+    <div class="container">
+      <h1>Javascript Calculator</h1>
+      <div class="calculator">
+        <section class="display">
+          <div id="display-full">display full calc</div>
+          <div id="display">display number only</div>
+        </section>
 
-<body>
-	<div class="container">
-		<h1>Javascript Calculator</h1>
-		<div class="calculator">
-			<div class="display">
-				<div id="display-full">display full calc</div>
-				<div id="display">display number only</div>
-			</div>
+        <section class="buttons-box">
+          <div class="button clear" id="clear">Clear Entry</div>
+          <div class="button" id="all-clear">All Clear</div>
+          <div class="button" id="backspace">Backspace</div>
 
-			<div class="button clear" id="clear">Clear Entry</div>
-			<div class="button" id="all-clear">All Clear</div>
-			<div class="button" id="backspace">Backspace</div>
+          <div class="button number" id="seven" data-value="7">7</div>
+          <div class="button number" id="eight" data-value="8">8</div>
+          <div class="button number" id="nine" data-value="9">9</div>
 
-			<div class="button number" id="seven" value="7">7</div>
-			<div class="button number" id="eight" value="8">8</div>
-			<div class="button number" id="nine" value="9">9</div>
+          <div class="button" id="multiply">x</div>
 
-			<div class="button" id="multiply">x</div>
+          <div class="button number" id="four" data-value="4">4</div>
+          <div class="button number" id="five" data-value="5">5</div>
+          <div class="button number" id="six" data-value="6">6</div>
 
-			<div class="button number" id="four" value="4">4</div>
-			<div class="button number" id="five" value="5">5</div>
-			<div class="button number" id="six" value="6">6</div>
-			
-			<div class="button" id="subtract">-</div>
+          <div class="button" id="subtract">-</div>
 
-			<div class="button number" id="one" value="1">1</div>
-			<div class="button number" id="two" value="2">2</div>
-			<div class="button number" id="three" value="3">3</div>
+          <div class="button number" id="one" data-value="1">1</div>
+          <div class="button number" id="two" data-value="2">2</div>
+          <div class="button number" id="three" data-value="3">3</div>
 
-			<div class="button" id="add">+</div>
-			
-			<div class="button number" id="zero" value="0">0</div>
-			<div class="button" id="decimal">.</div>
-			<div class="button" id="divide">/</div>
+          <div class="button" id="add">+</div>
 
-			<div class="button" id="equals">=</div>
-		</div>
-	</div>
+          <div class="button number" id="zero" data-value="0">0</div>
+          <div class="button" id="decimal" data-value=".">.</div>
+          <div class="button" id="divide">/</div>
 
-	<footer class="attributions">
-    <p>Made by <a href="https://github.com/anncancode" target="_blank">Ann Nguyen</a> for 
-		<a href="https://learn.freecodecamp.org/front-end-libraries/front-end-libraries-projects/build-a-javascript-calculator/" target="_blank">Free Code Camp</a> and 
-		<a href="https://www.theodinproject.com/courses/web-development-101/lessons/calculator" target="_blank">The Odin Project</a>.</p>
-  </footer>
+          <div class="button" id="equals">=</div>
+        </section>
+      </div>
+    </div>
 
-	<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
-	<script src="app.js"></script>
-</body>
+    <footer class="attributions">
+      <p>
+        Made by
+        <a href="https://github.com/anncancode" target="_blank">Ann Nguyen</a>
+        for
+        <a
+          href="https://learn.freecodecamp.org/front-end-libraries/front-end-libraries-projects/build-a-javascript-calculator/"
+          target="_blank"
+          >Free Code Camp</a
+        >
+        and
+        <a
+          href="https://www.theodinproject.com/courses/web-development-101/lessons/calculator"
+          target="_blank"
+          >The Odin Project</a
+        >.
+      </p>
+    </footer>
 
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <script src="app.js"></script>
+  </body>
 </html>
