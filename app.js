@@ -1,53 +1,116 @@
-let n1 = 0;
-let n2 = 0;
-let sign = "";
-let displayFull = `${n1} ${sign} ${n2}`;
-let displaySingle = 0;
-// create display function that checks for the inclusion of n1, sign, and n2 and display accordingly
+let activeNum = "";
+let operator = "";
+let heldNum = "";
+// create display function that checks for the inclusion of activeNum, operator, and heldNum and display accordingly
 
-document.querySelector("#display-full").textContent = displayFull;
-document.querySelector("#display").textContent = displaySingle;
+const displayEquation = () => {
+  let displayActive = document.querySelector("#display");
+  displayActive.textContent = parseFloat(activeNum);
+
+  let displayFull = document.querySelector("#display-full");
+
+  if (activeNum && operator && heldNum) {
+    displayFull.textContent = `${heldNum} ${operator} ${parseFloat(activeNum)}`;
+  } else if (heldNum && operator) {
+    displayFull.textContent = `${parseFloat(heldNum)} ${operator}`;
+  } else if (activeNum) {
+    displayFull.textContent = parseFloat(activeNum);
+  } else {
+    displayFull.textContent = 0;
+  }
+  // need to find which n is being actively created and display that
+};
+
+const makeAllClear = () => {
+  activeNum = "";
+  operator = "";
+  heldNum = "";
+};
+
 // if more numbers are clicked than can exist in the display, overflow it
 
-// get n1
-let n1val = [];
-let n2val = [];
-let displayValues = [];
-document.querySelector(".buttons-box").addEventListener("click", e => {
-
-  // check if n1 is blank if yes, do below, if no, create n2
-
-  // if digit pressed then do below
-  let digit = e.target.dataset.value;
-  console.log(digit);
-  n1val.push(digit);
-  console.log(n1val);
-
-  // if first decimal, push to decimal array
-    // if starts with decimal as first press, push("0.")
-    // if second decminal, no action
-  // if backspace, then .pop()
-  // if clear entry, then set n#val = [] 
-  // if all clear, then set displayfull (or some other display holder) to ""
-  // if press sign then number completes getting created and log the sign, 
-    // then check if n1 and n2 exists
-      // if only n1 exists, create n2
-      // if both n1 and n2 exists, compute the numbers and replace it as the new n1
-  // if press equal with only n1, no action (and allow users to continue inputing more digits)
-  // if both n1 and n2 exists, compute the 2 numbers
-  
+// if leading with decimal, start with "0."
+// do not allow second decimal
+// no leading with more than 1 zero, allow for "0" to display
+const getNumbers = document.querySelectorAll("[data-value]");
+getNumbers.forEach(button => {
+  button.addEventListener("click", e => {
+    let number = e.target.dataset.value;
+    if (number === "." && activeNum.includes(".")) return;
+    activeNum = activeNum.toString() + number.toString();
+    console.log(activeNum);
+    displayEquation();
+  });
 });
 
-// operate, which completes creating n2 when equals is pressed, generate answer
-const operate = (n1, n2, sign) => {
+const clearEntry = document.querySelector("#clear");
+clearEntry.addEventListener("click", e => {
+  activeNum = "";
+  displayEquation();
+});
+
+const allClear = document.querySelector("#all-clear");
+allClear.addEventListener("click", e => {
+  makeAllClear();
+  displayEquation();
+});
+
+const backspace = document.querySelector("#backspace");
+backspace.addEventListener("click", e => {
+  activeNum = activeNum.slice(0, -1);
+  console.log(activeNum);
+  displayEquation();
+});
+
+const getOperator = document.querySelectorAll("[data-op]");
+getOperator.forEach(sign => {
+  sign.addEventListener("click", e => {
+    let sign = e.target.dataset.op;
+    if (!operator) {
+      console.log("no sign");
+      operator = sign;
+      heldNum = activeNum;
+      activeNum = "0";
+      displayEquation();
+    }
+    console.log(sign);
+  });
+});
+
+const equals = document.querySelector("#equals");
+equals.addEventListener("click", e => {
+  console.log(executeOp(heldNum, activeNum, operator));
+});
+
+// check if activeNum is blank if yes, do below, if no, create heldNum
+// pressing digit rules
+// ### can try if it is between positive 1 and negative 1 can lead with 0. for leading decimal test cases
+// but only works as a string?
+
+// if digit pressed push to number
+
+// if backspace, then .pop()
+// if clear entry, then set n#val = []
+// if all clear, then set displayfull (or some other display holder) to ""
+// if press operator then number completes getting created and log the operator,
+// then check if activeNum and heldNum exists
+// if only activeNum exists, create heldNum
+// if both activeNum and heldNum exists, compute the numbers and replace it as the new activeNum
+// if press equal with only activeNum, no action (and allow users to continue inputing more digits)
+// if both activeNum and heldNum exists, compute the 2 numbers
+
+// operate, which completes creating heldNum when equals is pressed, generate answer
+const executeOp = (first, second, operator) => {
   let answer = 0;
-  if (sign === "x") {
+  let n1 = parseFloat(first);
+  let n2 = parseFloat(second);
+  if (operator === "x") {
     answer = n1 * n2;
-  } else if (sign === "-") {
+  } else if (operator === "-") {
     answer = n1 - n2;
-  } else if (sign === "+") {
+  } else if (operator === "+") {
     answer = n1 + n2;
-  } else if (sign === "/") {
+  } else if (operator === "÷") {
     if (n2 === 0) {
       answer = "Can't divide by zero!";
     } else {
@@ -57,4 +120,7 @@ const operate = (n1, n2, sign) => {
   return answer;
 };
 
-
+const start = () => {
+  displayEquation();
+};
+window.onload = start();

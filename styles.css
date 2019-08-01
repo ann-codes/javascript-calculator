@@ -2,6 +2,7 @@
 body {
   margin: 0;
   font-family: "Work Sans", sans-serif;
+  background: linear-gradient(rgba(113, 113, 113, 1) 0%, rgb(1, 0, 42) 100%);
 }
 
 h1 {
@@ -13,9 +14,9 @@ h1 {
 .container {
   margin: 3rem auto 2rem auto;
   padding: 1rem;
-  max-width: 450px;
+  max-width: 400px;
+  height: 80vh;
   text-align: center;
-  background-color: green;
 }
 
 .calculator {
@@ -24,32 +25,39 @@ h1 {
   margin: 1rem auto;
   padding: 1rem;
   background-color: white;
-}
-
-.buttons-box {
   display: grid;
   column-gap: 0;
-  max-width: 400px;
   grid-auto-rows: minmax(1fr, auto);
   grid-template-columns: repeat(4, 1fr);
+  border-radius: 5%;
+}
+
+/* ---------- DISPLAY ---------- */
+.display {
+  grid-column: 1 / 5;
+  grid-row: 1;
+  width: 96%;
+  padding: 2% 2% 1% 2%;
+  background-color: lightgray;
+  color: #222;
+  text-align: right;
+  font-size: 1rem;
+}
+
+#display {
+  font-size: 1.5rem;
 }
 
 /* ---------- BUTTONS ---------- */
-.display {
-  width: 98%;
-  padding-right: 2%;
-  background-color: gold;
-  text-align: right;
-}
-
 .clear {
   grid-column: 1 / 3;
-  grid-row: 1;
+  grid-row: 2;
 }
 
 .button {
   cursor: pointer;
   border: 1px solid black;
+  padding: 1rem;
 }
 
 .button:hover {
@@ -60,6 +68,11 @@ h1 {
   background-color: black;
 }
 
+#backspace {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+}
+
 /* ---------- FOOTER ---------- */
 .attributions {
   font-size: 1rem;
@@ -68,16 +81,18 @@ h1 {
 
 footer {
   width: 100%;
-  padding: 0.7rem 0 1rem 0;
-  margin: 0;
-  background-color: cyan;
+  padding: 0.5rem 0 0.5rem 0;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  color: white;
+  background-color: #333;
   text-align: center;
 }
 
 footer a {
-  font-weight: bold;
   text-decoration: none;
-  color: navy;
+  color: #888;
 }
 
 footer a:hover {
