@@ -7,7 +7,6 @@ body {
 
 h1 {
   color: white;
-  font-size: 1rem;
 }
 
 /* ---------- WRAPPERS ---------- */
@@ -49,9 +48,11 @@ h1 {
 }
 
 /* ---------- BUTTONS ---------- */
-.clear {
+.AC {
   grid-column: 1 / 3;
   grid-row: 2;
+  color: white;
+  background-color: navy;
 }
 
 .button {
@@ -71,6 +72,11 @@ h1 {
 #backspace {
   font-size: 1.5rem;
   padding: 0.5rem;
+}
+
+#equals {
+  color: white;
+  background-color: navy;
 }
 
 /* ---------- FOOTER ---------- */
