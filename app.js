@@ -5,22 +5,34 @@ let heldNum = "0";
 const displayEquation = () => {
   const displayFull = document.querySelector("#display-full");
   const displayActive = document.querySelector("#display");
-  displayActive.textContent = parseFloat(activeNum);
 
   let parseHeld = parseFloat(heldNum);
   let parseActive = parseFloat(activeNum);
 
-  if (activeNum !== "0" && operator && heldNum) {
-    displayFull.textContent = `${parseHeld} ${operator} ${parseActive}`;
-  } else if (activeNum === "0" && heldNum && operator) {
-    displayFull.textContent = `${parseHeld} ${operator}`;
-    // } else if (isNaN(parseHeld) && isNaN(parseActive)) {
-    //   displayFull.textContent = "boo!";
-    //   displayActive.textContent = "ahh!";
-  } else if (activeNum) {
-    displayFull.textContent = parseActive;
-  } else {
-    displayFull.textContent = 0;
+  try {
+    if (activeNum.includes(".")) {
+      let numArray = activeNum.split(".");
+      parseActive = `${parseFloat(numArray[0])}.${numArray[1]}`;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+
+  if (!isNaN(heldNum)) {
+    displayActive.textContent = parseActive;
+    if (activeNum !== "0" && operator && heldNum) {
+      displayFull.textContent = `${parseHeld} ${operator} ${parseActive}`;
+    } else if (activeNum === "0" && heldNum && operator) {
+      displayFull.textContent = `${parseHeld} ${operator}`;
+    } else if (activeNum) {
+      displayFull.textContent = parseActive;
+    } else {
+      displayFull.textContent = 0;
+    }
+  } else if (isNaN(activeNum) || isNaN(heldNum)) {
+    displayActive.textContent = "😱😱😱";
+    displayFull.textContent = "not possible...!";
+    makeAllClear()
   }
 };
 
@@ -30,16 +42,12 @@ const makeAllClear = () => {
   heldNum = "0";
 };
 
-let test = "hello!";
-console.log(test.includes("!"));
-
 const getNumbers = document.querySelectorAll("[data-value]");
 getNumbers.forEach(button => {
   button.addEventListener("click", e => {
     let number = e.target.dataset.value;
     if (number === "." && activeNum.includes(".")) return;
     activeNum = activeNum.toString() + number.toString();
-    console.log(activeNum);
     displayEquation();
   });
 });
@@ -60,7 +68,6 @@ const backspace = document.querySelector("#backspace");
 backspace.addEventListener("click", e => {
   if (activeNum.length > 1) {
     activeNum = activeNum.slice(0, -1);
-    console.log(activeNum);
     displayEquation();
   }
 });
@@ -72,27 +79,25 @@ getOperator.forEach(sign => {
     if (!operator) {
       operator = sign;
       heldNum = activeNum;
-      activeNum = "0";
-      displayEquation();
     } else if (operator && activeNum && heldNum) {
       heldNum = executeOp(heldNum, activeNum, operator);
-      console.log(sign);
       operator = sign;
-      activeNum = "0";
-      displayEquation();
     } else if (isNaN(heldNum)) {
       heldNum = "0";
-      displayEquation();
-    }
+    };
+    activeNum = "0";
+    displayEquation();
   });
 });
 
 const equals = document.querySelector("#equals");
 equals.addEventListener("click", e => {
-  activeNum = executeOp(heldNum, activeNum, operator);
+  console.log("=")
+  activeNum = executeOp(heldNum, activeNum, operator).toString();
+  if (isNaN(activeNum)) {
+    heldNum = NaN;
+  }
   operator = "";
-  heldNum = "";
-  console.log(activeNum);
   displayEquation();
 });
 
@@ -108,9 +113,9 @@ const executeOp = (first, second, operator) => {
     answer = n1 + n2;
   } else if (operator === "÷") {
     if (n2 === 0) {
-      answer = "😱 not possible...!";
+      answer = NaN;
       operator = "";
-      heldNum = "0";
+      heldNum = NaN;
     } else {
       answer = n1 / n2;
     }

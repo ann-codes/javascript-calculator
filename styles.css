@@ -7,58 +7,65 @@ body {
 
 h1 {
   color: white;
+  font-weight: normal;
 }
 
 /* ---------- WRAPPERS ---------- */
 .container {
-  margin: 3rem auto 2rem auto;
+  margin: 3rem auto 5rem auto;
   padding: 1rem;
-  max-width: 400px;
+  max-width: 350px;
   height: 80vh;
   text-align: center;
 }
 
 .calculator {
-  font-family: "Space Mono", monospace;
-  max-width: 400px;
+  font-family: "Roboto Slab", monospace;
+  max-width: 300px;
   margin: 1rem auto;
   padding: 1rem;
-  background-color: white;
   display: grid;
   column-gap: 0;
   grid-auto-rows: minmax(1fr, auto);
   grid-template-columns: repeat(4, 1fr);
-  border-radius: 5%;
+  border-radius: 15px 15px 15px 15px;
+  -moz-border-radius: 15px 15px 15px 15px;
+  -webkit-border-radius: 15px 15px 15px 15px;
+  background-color: white;
+  -webkit-box-shadow: inset 0px 0px 6px 2px rgba(200,200,200,1);
+  -moz-box-shadow: inset 0px 0px 6px 2px rgba(200,200,200,1);
+  box-shadow: inset 0px 0px 6px 2px rgba(200,200,200,1);
 }
 
 /* ---------- DISPLAY ---------- */
 .display {
   grid-column: 1 / 5;
   grid-row: 1;
-  width: 96%;
-  padding: 2% 2% 1% 2%;
-  background-color: lightgray;
+  width: 94%;
+  padding: 3% 3% 2% 3%;
+  margin-bottom: 4px;
+  background-color: rgb(236, 236, 236);
   color: #222;
   text-align: right;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 #display {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
+  padding-top: .4rem;
 }
 
 /* ---------- BUTTONS ---------- */
-.AC {
-  grid-column: 1 / 3;
-  grid-row: 2;
-  color: white;
-  background-color: navy;
-}
-
 .button {
   cursor: pointer;
-  border: 1px solid black;
-  padding: 1rem;
+  padding: 1.5rem 1rem;
+  margin: 2px;
+  border-radius: 5%;
+  border: 1px solid rgb(190, 190, 190);
+  background-color: rgb(218, 219, 233);
+  -webkit-box-shadow: inset -3px -3px 10px -3px rgba(110,110,110,0.6);
+  -moz-box-shadow: inset -3px -3px 10px -3px rgba(110,110,110,0.6);
+  box-shadow: inset -3px -3px 10px -3px rgba(110,110,110,0.6);
 }
 
 .button:hover {
@@ -69,14 +76,17 @@ h1 {
   background-color: black;
 }
 
-#backspace {
-  font-size: 1.5rem;
-  padding: 0.5rem;
+.AC {
+  grid-column: 1 / 3;
+  grid-row: 2;
+  color: white;
+  background-color: rgb(0, 0, 60);
 }
 
-#equals {
-  color: white;
-  background-color: navy;
+#backspace {
+  font-size: 1.8rem;
+  padding-top: 1rem;
+  padding-bottom: .1rem;
 }
 
 /* ---------- FOOTER ---------- */
