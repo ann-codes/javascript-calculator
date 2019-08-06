@@ -9,13 +9,9 @@ const displayEquation = () => {
   let parseHeld = parseFloat(heldNum);
   let parseActive = parseFloat(activeNum);
 
-  try {
-    if (activeNum.includes(".")) {
-      let numArray = activeNum.split(".");
-      parseActive = `${parseFloat(numArray[0])}.${numArray[1]}`;
-    }
-  } catch (e) {
-    console.log(e);
+  if (activeNum.includes(".")) {
+    let numArray = activeNum.split(".");
+    parseActive = `${parseFloat(numArray[0])}.${numArray[1]}`;
   }
 
   if (!isNaN(heldNum)) {
@@ -32,74 +28,9 @@ const displayEquation = () => {
   } else if (isNaN(activeNum) || isNaN(heldNum)) {
     displayActive.textContent = "😱😱😱";
     displayFull.textContent = "not possible...!";
-    makeAllClear()
+    makeAllClear();
   }
 };
-
-const makeAllClear = () => {
-  activeNum = "0";
-  operator = "";
-  heldNum = "0";
-};
-
-const getNumbers = document.querySelectorAll("[data-value]");
-getNumbers.forEach(button => {
-  button.addEventListener("click", e => {
-    let number = e.target.dataset.value;
-    if (number === "." && activeNum.includes(".")) return;
-    activeNum = activeNum.toString() + number.toString();
-    displayEquation();
-  });
-});
-
-const clearEntry = document.querySelector("#clear");
-clearEntry.addEventListener("click", e => {
-  activeNum = "0";
-  displayEquation();
-});
-
-const allClear = document.querySelector("#all-clear");
-allClear.addEventListener("click", e => {
-  makeAllClear();
-  displayEquation();
-});
-
-const backspace = document.querySelector("#backspace");
-backspace.addEventListener("click", e => {
-  if (activeNum.length > 1) {
-    activeNum = activeNum.slice(0, -1);
-    displayEquation();
-  }
-});
-
-const getOperator = document.querySelectorAll("[data-op]");
-getOperator.forEach(sign => {
-  sign.addEventListener("click", e => {
-    let sign = e.target.dataset.op;
-    if (!operator) {
-      operator = sign;
-      heldNum = activeNum;
-    } else if (operator && activeNum && heldNum) {
-      heldNum = executeOp(heldNum, activeNum, operator);
-      operator = sign;
-    } else if (isNaN(heldNum)) {
-      heldNum = "0";
-    };
-    activeNum = "0";
-    displayEquation();
-  });
-});
-
-const equals = document.querySelector("#equals");
-equals.addEventListener("click", e => {
-  console.log("=")
-  activeNum = executeOp(heldNum, activeNum, operator).toString();
-  if (isNaN(activeNum)) {
-    heldNum = NaN;
-  }
-  operator = "";
-  displayEquation();
-});
 
 const executeOp = (first, second, operator) => {
   let answer = 0;
@@ -122,6 +53,112 @@ const executeOp = (first, second, operator) => {
   }
   return answer;
 };
+
+const makeAllClear = () => {
+  activeNum = "0";
+  operator = "";
+  heldNum = "0";
+};
+
+const useBackspace = () => (activeNum = activeNum.slice(0, -1));
+
+// // keyboard support WIP
+// window.addEventListener("keyup", logKey);
+// function logKey(e) {
+//   console.log(e);
+//   console.log(`${e.key}`);
+//   let number = e.key;
+//   let numParse = parseFloat(number);
+//   console.log(number);
+//   console.log(numParse);
+
+//   if (!isNaN(numParse) || number === ".") {
+//     activeNum = activeNum.toString() + number.toString();
+//   } else if (number === "Backspace") {
+//     useBackspace();
+//   } else if (number === "=" || number === "Enter") {
+//     computeEquals();
+//   } else if (number === "-" || "+") {
+//     let sign = number;
+//     assignOperator(sign);
+//   } else if (number === "/" || "÷") {
+//     let sign = "÷";
+//     assignOperator(sign);
+//   } else if (number === "x" || "*") {
+//     let sign = "x";
+//     assignOperator(sign);
+//   }
+//   displayEquation();
+// }
+
+const getNumbers = document.querySelectorAll("[data-value]");
+getNumbers.forEach(button => {
+  button.addEventListener("click", e => {
+    let number = e.target.dataset.value;
+    if (number === "." && activeNum.includes(".")) return;
+    activeNum = activeNum.toString() + number.toString();
+    displayEquation();
+  });
+});
+
+const backspace = document.querySelector("#backspace");
+backspace.addEventListener("click", e => {
+  if (activeNum.length > 1) {
+    // activeNum = activeNum.slice(0, -1);
+    useBackspace();
+    displayEquation();
+  }
+});
+
+const clearEntry = document.querySelector("#clear");
+clearEntry.addEventListener("click", e => {
+  activeNum = "0";
+  displayEquation();
+});
+
+const allClear = document.querySelector("#all-clear");
+allClear.addEventListener("click", e => {
+  makeAllClear();
+  displayEquation();
+});
+
+const assignOperator = sign => {
+  if (!operator) {
+    operator = sign;
+    heldNum = activeNum;
+  } else if (operator && activeNum && heldNum) {
+    heldNum = executeOp(heldNum, activeNum, operator);
+    operator = sign;
+  } else if (isNaN(heldNum)) {
+    heldNum = "0";
+  }
+  activeNum = "0";
+};
+
+// need conditional for if click num then click more signs more then 2x after produces NaN
+// need to make it so that sign simply changes if a different once is clicked
+const getOperator = document.querySelectorAll("[data-op]");
+getOperator.forEach(sign => {
+  sign.addEventListener("click", e => {
+    let sign = e.target.dataset.op;
+    assignOperator(sign);
+    displayEquation();
+  });
+});
+
+const computeEquals = () => {
+  activeNum = executeOp(heldNum, activeNum, operator).toString();
+  if (isNaN(activeNum)) {
+    heldNum = NaN;
+  }
+  operator = "";
+};
+
+const equals = document.querySelector("#equals");
+equals.addEventListener("click", e => {
+  computeEquals();
+  displayEquation();
+});
 
 const start = () => {
   displayEquation();
